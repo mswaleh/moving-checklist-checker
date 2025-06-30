@@ -5,110 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Canada Moving Checklist</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
             min-height: 100vh;
+            padding: 20px;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             background: white;
             border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             overflow: hidden;
-            backdrop-filter: blur(10px);
         }
-        
+
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 40px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
-            animation: float 20s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        
+
         .header h1 {
-            margin: 0;
-            font-size: 2.8em;
+            font-size: 2.5em;
+            margin-bottom: 10px;
             font-weight: 300;
-            position: relative;
-            z-index: 1;
         }
-        
+
         .header p {
-            margin: 15px 0 0 0;
-            font-size: 1.3em;
+            font-size: 1.2em;
             opacity: 0.9;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 20px;
         }
-        
+
         .overall-progress {
             background: rgba(255,255,255,0.1);
-            border-radius: 12px;
+            border-radius: 10px;
             padding: 20px;
             margin-top: 20px;
-            position: relative;
-            z-index: 1;
         }
-        
+
         .overall-stats {
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
-            font-size: 16px;
-            font-weight: 500;
+            font-weight: 600;
         }
-        
-        .overall-progress-bar {
+
+        .progress-bar {
             width: 100%;
-            height: 12px;
+            height: 10px;
             background: rgba(255,255,255,0.2);
-            border-radius: 6px;
+            border-radius: 5px;
             overflow: hidden;
         }
-        
-        .overall-progress-fill {
+
+        .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            width: 0%;
             transition: width 0.5s ease;
-            border-radius: 6px;
+            border-radius: 5px;
         }
-        
+
         .tabs {
             display: flex;
             background: #f8f9fa;
-            border-bottom: 2px solid #e9ecef;
             overflow-x: auto;
-            scroll-behavior: smooth;
         }
-        
+
         .tab {
             flex: 1;
             min-width: 150px;
-            padding: 18px 24px;
+            padding: 15px 20px;
             background: #f8f9fa;
             border: none;
             cursor: pointer;
@@ -116,224 +94,175 @@
             font-weight: 600;
             transition: all 0.3s ease;
             white-space: nowrap;
-            position: relative;
         }
-        
+
         .tab:hover {
             background: #e9ecef;
-            transform: translateY(-2px);
         }
-        
+
         .tab.active {
             background: white;
-            border-bottom: 4px solid #667eea;
             color: #667eea;
-            box-shadow: 0 -2px 8px rgba(102, 126, 234, 0.2);
+            border-bottom: 3px solid #667eea;
         }
-        
+
         .content {
-            padding: 40px;
+            padding: 30px;
         }
-        
+
         .tab-content {
             display: none;
-            animation: fadeIn 0.3s ease-in;
         }
-        
+
         .tab-content.active {
             display: block;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        .section-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            margin: 20px -30px 20px -30px;
+            font-size: 18px;
+            font-weight: 600;
         }
-        
+
+        .tab-progress {
+            margin-bottom: 20px;
+        }
+
+        .tab-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .tab-progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .tab-progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+
         .checklist-item {
             display: flex;
             align-items: flex-start;
             padding: 20px;
             margin: 15px 0;
             background: #f8f9fa;
-            border-radius: 12px;
-            border-left: 5px solid #28a745;
+            border-radius: 10px;
+            border-left: 4px solid #28a745;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
-        
-        .checklist-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, transparent 0%, rgba(102, 126, 234, 0.05) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
+
         .checklist-item:hover {
             background: #e9ecef;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        
-        .checklist-item:hover::before {
-            opacity: 1;
-        }
-        
+
         .checklist-item.completed {
             background: #d4edda;
             border-left-color: #155724;
-            opacity: 0.8;
         }
-        
+
         .checkbox {
-            margin-right: 20px;
-            margin-top: 4px;
-            width: 20px;
-            height: 20px;
+            margin-right: 15px;
+            margin-top: 3px;
+            width: 18px;
+            height: 18px;
             cursor: pointer;
             accent-color: #667eea;
         }
-        
+
         .item-content {
             flex: 1;
-            position: relative;
-            z-index: 1;
         }
-        
+
         .item-title {
             font-weight: 700;
-            font-size: 17px;
+            font-size: 16px;
             margin-bottom: 8px;
             color: #2c3e50;
         }
-        
+
         .item-description {
             color: #6c757d;
-            font-size: 15px;
-            line-height: 1.5;
-            margin-bottom: 12px;
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 10px;
         }
-        
+
         .item-details {
             display: flex;
-            gap: 20px;
-            font-size: 13px;
+            gap: 15px;
+            font-size: 12px;
             color: #868e96;
             flex-wrap: wrap;
         }
-        
+
         .priority {
-            padding: 4px 12px;
-            border-radius: 16px;
+            padding: 3px 8px;
+            border-radius: 12px;
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 11px;
-            letter-spacing: 0.5px;
+            font-size: 10px;
         }
-        
+
         .priority.high {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            background: #ff6b6b;
             color: white;
         }
-        
+
         .priority.medium {
-            background: linear-gradient(135deg, #feca57, #ff9ff3);
+            background: #feca57;
             color: white;
         }
-        
+
         .priority.low {
-            background: linear-gradient(135deg, #48dbfb, #0abde3);
+            background: #48dbfb;
             color: white;
         }
-        
+
         .deadline {
-            font-weight: 600;
-            padding: 4px 8px;
+            font-weight: 500;
+            padding: 3px 8px;
             background: rgba(102, 126, 234, 0.1);
             border-radius: 8px;
         }
-        
-        .section-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px 25px;
-            margin: 30px -40px 20px -40px;
-            font-size: 20px;
-            font-weight: 700;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .section-header::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1));
-            transform: translateX(100px);
-            animation: shimmer 3s ease-in-out infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { transform: translateX(-100px); }
-            100% { transform: translateX(300px); }
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background: #e9ecef;
-            border-radius: 5px;
-            margin: 25px 0;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transition: width 0.5s ease;
-            border-radius: 5px;
-        }
-        
-        .stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 25px;
-            font-size: 15px;
-            color: #6c757d;
-            font-weight: 600;
-        }
-        
+
         .notes-section {
             margin-top: 30px;
             padding: 20px;
-            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
-            border-radius: 12px;
-            border-left: 5px solid #ffc107;
-            position: relative;
-            overflow: hidden;
+            background: #fff3cd;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
         }
-        
+
         .notes-title {
             font-weight: 700;
             color: #856404;
-            margin-bottom: 12px;
-            font-size: 16px;
+            margin-bottom: 10px;
         }
-        
+
         .notes-content {
             color: #856404;
             font-size: 14px;
-            line-height: 1.6;
+            line-height: 1.5;
         }
-        
+
         .save-button {
             position: fixed;
             bottom: 30px;
@@ -350,16 +279,12 @@
             transition: all 0.3s ease;
             z-index: 1000;
         }
-        
+
         .save-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
         }
-        
-        .save-button:active {
-            transform: translateY(0);
-        }
-        
+
         @media (max-width: 768px) {
             .content { padding: 20px; }
             .header { padding: 30px 20px; }
@@ -380,377 +305,52 @@
                     <span id="overall-completed">0 of 75 completed</span>
                     <span id="overall-percentage">0% complete</span>
                 </div>
-                <div class="overall-progress-bar">
-                    <div id="overall-progress-fill" class="overall-progress-fill" style="width: 0%"></div>
+                <div class="progress-bar">
+                    <div id="overall-progress-fill" class="progress-fill"></div>
                 </div>
             </div>
         </div>
-        
+
         <div class="tabs">
-            <button class="tab active" data-tab="legal">Legal & Immigration</button>
-            <button class="tab" data-tab="medical">Medical & Health</button>
-            <button class="tab" data-tab="financial">Financial & Banking</button>
-            <button class="tab" data-tab="education">Kids' Education</button>
-            <button class="tab" data-tab="utilities">Utilities & Services</button>
-            <button class="tab" data-tab="housing">Housing & Moving</button>
-            <button class="tab" data-tab="government">Government Services</button>
-            <button class="tab" data-tab="logistics">Moving Logistics</button>
+            <button class="tab active" onclick="showTab('legal')">Legal & Immigration</button>
+            <button class="tab" onclick="showTab('medical')">Medical & Health</button>
+            <button class="tab" onclick="showTab('financial')">Financial & Banking</button>
+            <button class="tab" onclick="showTab('education')">Kids' Education</button>
+            <button class="tab" onclick="showTab('utilities')">Utilities & Services</button>
+            <button class="tab" onclick="showTab('housing')">Housing & Moving</button>
+            <button class="tab" onclick="showTab('government')">Government Services</button>
+            <button class="tab" onclick="showTab('logistics')">Moving Logistics</button>
         </div>
-        
+
         <div class="content">
             <!-- Legal & Immigration Tab -->
             <div id="legal" class="tab-content active">
-                <div class="stats">
-                    <span id="legal-completed">0 of 12 completed</span>
-                    <span id="legal-progress">0% complete</span>
+                <div class="tab-progress">
+                    <div class="tab-stats">
+                        <span class="tab-completed">0 of 12 completed</span>
+                        <span class="tab-percentage">0% complete</span>
+                    </div>
+                    <div class="tab-progress-bar">
+                        <div class="tab-progress-fill"></div>
+                    </div>
                 </div>
-                <div class="progress-bar">
-                    <div id="legal-progress-bar" class="progress-fill" style="width: 0%"></div>
-                </div>
-                
+
                 <div class="section-header">Immigration Documents & Legal Requirements</div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Confirm Immigration Status & Documents</div>
                         <div class="item-description">Ensure you have valid immigration visa, confirmation of permanent residence, or work permit for Canada</div>
                         <div class="item-details">
-                            <span class="priority low">Low Priority</span>
-                            <span class="deadline">Complete: 6 months after arrival</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="notes-section">
-                    <div class="notes-title">Government Services Notes:</div>
-                    <div class="notes-content">
-                        • SIN is required for employment and banking - apply ASAP<br>
-                        • BC Services Card combines ID and health card functions<br>
-                        • MSP waiting period can be waived with private insurance coverage<br>
-                        • Keep all government registration documents safe and accessible
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Moving Logistics Tab -->
-            <div id="logistics" class="tab-content">
-                <div class="stats">
-                    <span id="logistics-completed">0 of 10 completed</span>
-                    <span id="logistics-progress">0% complete</span>
-                </div>
-                <div class="progress-bar">
-                    <div id="logistics-progress-bar" class="progress-fill" style="width: 0%"></div>
-                </div>
-                
-                <div class="section-header">Move Planning & Logistics</div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Create Moving Timeline</div>
-                        <div class="item-description">Develop detailed timeline with milestones leading up to and after the move</div>
-                        <div class="item-details">
                             <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 4 months before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Inventory Belongings</div>
-                        <div class="item-description">Create detailed inventory with photos for customs and insurance purposes</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 2 months before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Book International Moving Company</div>
-                        <div class="item-description">Schedule pickup and delivery dates with chosen international moving company</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 6-8 weeks before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Arrange Pet Transportation</div>
-                        <div class="item-description">If applicable, plan pet travel including health certificates and quarantine requirements</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 2 months before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Plan Travel Arrangements</div>
-                        <div class="item-description">Book flights or plan driving route from Antioch, CA to Vancouver, BC</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 2 months before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Prepare Survival Kit</div>
-                        <div class="item-description">Pack essentials for first week: clothes, toiletries, important documents, medications</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 1 week before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Research Import Restrictions</div>
-                        <div class="item-description">Understand what items cannot be brought into Canada and plan accordingly</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 3 months before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Arrange Storage (if needed)</div>
-                        <div class="item-description">Research storage facilities in Vancouver area for items that can't immediately fit in new home</div>
-                        <div class="item-details">
-                            <span class="priority low">Low Priority</span>
-                            <span class="deadline">Complete: 1 month before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Plan Welcome Gathering</div>
-                        <div class="item-description">Research local community groups and plan how to meet neighbors and make connections</div>
-                        <div class="item-details">
-                            <span class="priority low">Low Priority</span>
-                            <span class="deadline">Complete: 2-3 months after arrival</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Create Emergency Contact List</div>
-                        <div class="item-description">Compile list of important Canadian contacts: embassy, hospitals, schools, utilities</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 1 month before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="notes-section">
-                    <div class="notes-title">Moving Logistics Notes:</div>
-                    <div class="notes-content">
-                        • International moves typically take 4-8 weeks for delivery<br>
-                        • Keep important documents with you during travel, not in shipped items<br>
-                        • Consider climate differences when packing seasonal items<br>
-                        • Have contingency plans for delays or unexpected issues
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <button class="save-button" id="saveButton">💾 Save Progress</button>
-    </div>
-
-    <script>
-        // Global variables
-        let checkboxes = [];
-        const tabData = {
-            legal: 12,
-            medical: 10,
-            financial: 13,
-            education: 8,
-            utilities: 10,
-            housing: 12,
-            government: 10,
-            logistics: 10
-        };
-
-        // Initialize the application
-        function init() {
-            checkboxes = document.querySelectorAll('.checkbox');
-            setupEventListeners();
-            loadProgress();
-            updateAllProgress();
-        }
-
-        // Set up all event listeners
-        function setupEventListeners() {
-            // Tab switching
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    showTab(this.getAttribute('data-tab'));
-                });
-            });
-
-            // Checkbox change events
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    updateProgress();
-                    saveProgress();
-                });
-            });
-
-            // Save button
-            const saveButton = document.getElementById('saveButton');
-            saveButton.addEventListener('click', saveProgress);
-
-            // Keyboard shortcut for saving
-            document.addEventListener('keydown', function(e) {
-                if (e.ctrlKey && e.key === 's') {
-                    e.preventDefault();
-                    saveProgress();
-                }
-            });
-        }
-
-        // Tab switching functionality
-        function showTab(tabName) {
-            // Hide all tab contents
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
-            
-            // Remove active class from all tabs
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            
-            // Show selected tab content
-            const targetTab = document.getElementById(tabName);
-            if (targetTab) {
-                targetTab.classList.add('active');
-            }
-            
-            // Add active class to clicked tab
-            const activeTab = document.querySelector(`[data-tab="${tabName}"]`);
-            if (activeTab) {
-                activeTab.classList.add('active');
-            }
-        }
-
-        // Update progress for all tabs and overall
-        function updateProgress() {
-            updateAllProgress();
-        }
-
-        function updateAllProgress() {
-            let totalCompleted = 0;
-            let totalItems = 0;
-
-            Object.keys(tabData).forEach(tabName => {
-                const tabCheckboxes = document.querySelectorAll(`#${tabName} .checkbox`);
-                const completedCheckboxes = document.querySelectorAll(`#${tabName} .checkbox:checked`);
-                
-                const completed = completedCheckboxes.length;
-                const total = tabCheckboxes.length;
-                
-                totalItems += total;
-                totalCompleted += completed;
-                
-                // Update individual tab progress
-                updateTabProgress(tabName, completed, total);
-                
-                // Update item styling
-                tabCheckboxes.forEach(checkbox => {
-                    const item = checkbox.closest('.checklist-item');
-                    if (checkbox.checked) {
-                        item.classList.add('completed');
-                    } else {
-                        item.classList.remove('completed');
-                    }
-                });
-            });
-            
-            // Update overall progress
-            updateOverallProgress(totalCompleted, totalItems);
-        }
-
-        function updateTabProgress(tabName, completed, total) {
-            const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
-            
-            const completedElement = document.getElementById(`${tabName}-completed`);
-            const progressElement = document.getElementById(`${tabName}-progress`);
-            const progressBarElement = document.getElementById(`${tabName}-progress-bar`);
-            
-            if (completedElement) completedElement.textContent = `${completed} of ${total} completed`;
-            if (progressElement) progressElement.textContent = `${percentage}% complete`;
-            if (progressBarElement) progressBarElement.style.width = `${percentage}%`;
-        }
-
-        function updateOverallProgress(completed, total) {
-            const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
-            
-            const overallCompletedElement = document.getElementById('overall-completed');
-            const overallPercentageElement = document.getElementById('overall-percentage');
-            const overallProgressFillElement = document.getElementById('overall-progress-fill');
-            
-            if (overallCompletedElement) overallCompletedElement.textContent = `${completed} of ${total} completed`;
-            if (overallPercentageElement) overallPercentageElement.textContent = `${percentage}% complete`;
-            if (overallProgressFillElement) overallProgressFillElement.style.width = `${percentage}%`;
-        }
-
-        // Save progress (using memory storage since localStorage not available)
-        function saveProgress() {
-            // Show save confirmation
-            const button = document.getElementById('saveButton');
-            const originalText = button.innerHTML;
-            const originalColor = button.style.background;
-            
-            button.innerHTML = '✅ Saved!';
-            button.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
-            
-            setTimeout(() => {
-                button.innerHTML = originalText;
-                button.style.background = originalColor || 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-            }, 2000);
-        }
-
-        // Load progress (placeholder function)
-        function loadProgress() {
-            // This would load from storage if available
-            // For now, it's a placeholder since we can't use localStorage
-        }
-
-        // Initialize when DOM is loaded
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
-</body>
-</html> high">High Priority</span>
                             <span class="deadline">Complete: 3-6 months before move</span>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Validate Passports</div>
                         <div class="item-description">Ensure all family passports are valid for at least 6 months beyond entry date</div>
@@ -760,9 +360,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Prepare Customs Documentation</div>
                         <div class="item-description">Create 2 copies each: detailed list of personal items bringing, list of items arriving later with values</div>
@@ -772,9 +372,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Proof of Funds Documentation</div>
                         <div class="item-description">Gather bank statements. Must declare $10,000+ CAD to Canada Border Services Agency</div>
@@ -784,9 +384,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Background Checks & Police Certificates</div>
                         <div class="item-description">Obtain police certificates from all countries lived in for 6+ months since age 18</div>
@@ -796,9 +396,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Birth Certificates</div>
                         <div class="item-description">Obtain certified copies of birth certificates for all family members</div>
@@ -808,9 +408,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Marriage Certificate</div>
                         <div class="item-description">Obtain certified copy of marriage certificate if applicable</div>
@@ -820,9 +420,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Apostille/Authentication of Documents</div>
                         <div class="item-description">Get US documents apostilled or authenticated for use in Canada</div>
@@ -832,9 +432,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Legal Name Change Documents</div>
                         <div class="item-description">If applicable, gather all legal name change documentation</div>
@@ -844,9 +444,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Power of Attorney (if needed)</div>
                         <div class="item-description">Arrange power of attorney for any remaining US affairs</div>
@@ -856,9 +456,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Research Canadian Legal Requirements</div>
                         <div class="item-description">Understand BC driving, tax, and residency requirements</div>
@@ -868,9 +468,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Contact Immigration Lawyer/Consultant</div>
                         <div class="item-description">Consult with qualified Canadian immigration professional if needed</div>
@@ -881,21 +481,23 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Medical & Health Tab -->
             <div id="medical" class="tab-content">
-                <div class="stats">
-                    <span id="medical-completed">0 of 10 completed</span>
-                    <span id="medical-progress">0% complete</span>
+                <div class="tab-progress">
+                    <div class="tab-stats">
+                        <span class="tab-completed">0 of 10 completed</span>
+                        <span class="tab-percentage">0% complete</span>
+                    </div>
+                    <div class="tab-progress-bar">
+                        <div class="tab-progress-fill"></div>
+                    </div>
                 </div>
-                <div class="progress-bar">
-                    <div id="medical-progress-bar" class="progress-fill" style="width: 0%"></div>
-                </div>
-                
+
                 <div class="section-header">Medical Records & Healthcare</div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Immigration Medical Examination</div>
                         <div class="item-description">Complete required medical exam by approved panel physician for immigration</div>
@@ -905,9 +507,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Obtain Complete Medical Records</div>
                         <div class="item-description">Request comprehensive medical records from all doctors, specialists, and hospitals</div>
@@ -917,9 +519,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Child's Vaccination Records</div>
                         <div class="item-description">Get complete immunization records for Grade 3 student - required for school enrollment</div>
@@ -929,9 +531,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Prescription Medications</div>
                         <div class="item-description">Obtain 90-day supply and original prescriptions. Research Canadian equivalents</div>
@@ -941,9 +543,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Dental Records & X-rays</div>
                         <div class="item-description">Request dental records, X-rays, and recent treatment history for all family members</div>
@@ -953,9 +555,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Vision/Optometry Records</div>
                         <div class="item-description">Get eye exam records and prescription information for glasses/contacts</div>
@@ -965,9 +567,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Research BC Healthcare System</div>
                         <div class="item-description">Understand BC Medical Services Plan (MSP) and how to apply</div>
@@ -977,9 +579,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Find Family Doctor in Vancouver</div>
                         <div class="item-description">Research and contact family physicians accepting new patients in Vancouver area</div>
@@ -989,9 +591,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Mental Health Records</div>
                         <div class="item-description">If applicable, obtain counseling/therapy records and referrals</div>
@@ -1001,9 +603,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Health Insurance Transition Plan</div>
                         <div class="item-description">Plan for gap coverage between US insurance ending and Canadian coverage beginning</div>
@@ -1013,7 +615,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="notes-section">
                     <div class="notes-title">Important Health Notes:</div>
                     <div class="notes-content">
@@ -1024,21 +626,23 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Financial & Banking Tab -->
             <div id="financial" class="tab-content">
-                <div class="stats">
-                    <span id="financial-completed">0 of 13 completed</span>
-                    <span id="financial-progress">0% complete</span>
+                <div class="tab-progress">
+                    <div class="tab-stats">
+                        <span class="tab-completed">0 of 13 completed</span>
+                        <span class="tab-percentage">0% complete</span>
+                    </div>
+                    <div class="tab-progress-bar">
+                        <div class="tab-progress-fill"></div>
+                    </div>
                 </div>
-                <div class="progress-bar">
-                    <div id="financial-progress-bar" class="progress-fill" style="width: 0%"></div>
-                </div>
-                
+
                 <div class="section-header">Banking, Taxes & Financial Services</div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Research Canadian Banks</div>
                         <div class="item-description">Compare newcomer banking packages from RBC, TD, CIBC, Scotiabank, BMO</div>
@@ -1048,9 +652,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Open Canadian Bank Account</div>
                         <div class="item-description">Open account with newcomer benefits (often 12 months free banking)</div>
@@ -1060,9 +664,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Currency Exchange Planning</div>
                         <div class="item-description">Plan currency exchange strategy, compare rates, consider timing</div>
@@ -1072,9 +676,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Credit History Transfer</div>
                         <div class="item-description">Research credit history transfer options with US banks that operate in Canada</div>
@@ -1084,9 +688,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Canadian Credit Card Application</div>
                         <div class="item-description">Apply for secured/newcomer credit card to start building Canadian credit history</div>
@@ -1096,9 +700,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">US Tax Obligations Research</div>
                         <div class="item-description">Understand ongoing US tax filing requirements as expatriate</div>
@@ -1108,9 +712,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Canadian Tax System Research</div>
                         <div class="item-description">Learn about Canadian tax obligations, CRA requirements, tax treaty benefits</div>
@@ -1120,9 +724,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Find Cross-Border Tax Professional</div>
                         <div class="item-description">Locate CPA experienced with US-Canada tax issues for first year filing</div>
@@ -1132,9 +736,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">FBAR & FATCA Compliance</div>
                         <div class="item-description">Understand US reporting requirements for foreign bank accounts (FBAR, Form 8938)</div>
@@ -1144,9 +748,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
                         <div class="item-title">Retirement Account Planning</div>
                         <div class="item-description">Plan for 401k, IRA management from Canada, understand tax implications</div>
@@ -1156,607 +760,8 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" onchange="updateProgress()">
                     <div class="item-content">
-                        <div class="item-title">Investment Account Management</div>
-                        <div class="item-description">Plan management of US investment accounts, research Canadian equivalents</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 1 month before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Emergency Fund Planning</div>
-                        <div class="item-description">Ensure 6-12 months expenses available for transition period</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 3 months before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Notify Financial Institutions</div>
-                        <div class="item-description">Inform all banks, credit cards, investment firms of international move</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 1 month before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="notes-section">
-                    <div class="notes-title">Important Financial Notes:</div>
-                    <div class="notes-content">
-                        • Many Canadian banks offer newcomer packages with 12 months free banking<br>
-                        • You'll need to file taxes in both countries for at least the first year<br>
-                        • Consider the foreign tax credit to avoid double taxation<br>
-                        • Keep detailed records of all moving expenses for tax purposes
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Kids' Education Tab -->
-            <div id="education" class="tab-content">
-                <div class="stats">
-                    <span id="education-completed">0 of 8 completed</span>
-                    <span id="education-progress">0% complete</span>
-                </div>
-                <div class="progress-bar">
-                    <div id="education-progress-bar" class="progress-fill" style="width: 0%"></div>
-                </div>
-                
-                <div class="section-header">School Enrollment & Educational Requirements</div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Research Vancouver School Districts</div>
-                        <div class="item-description">Compare Vancouver School Board (VSB) and other districts in your target area</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 3-4 months before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Obtain School Transcripts</div>
-                        <div class="item-description">Request official transcripts from current Grade 3 school with detailed curriculum information</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 2 months before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Complete Immunization Requirements</div>
-                        <div class="item-description">Ensure all BC school immunization requirements are met (may differ from US requirements)</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 1 month before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Research School Catchment Areas</div>
-                        <div class="item-description">Understand school boundaries and enrollment priorities for desired schools</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 3 months before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Prepare School Registration Documents</div>
-                        <div class="item-description">Gather proof of residence, child's birth certificate, immunization records, and previous school records</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 2 weeks after arrival</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Contact Preferred Schools</div>
-                        <div class="item-description">Reach out to admissions offices at preferred schools to understand enrollment process</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 1-2 months before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Research Extracurricular Activities</div>
-                        <div class="item-description">Look into sports, arts, and other activities available in Vancouver schools and community centers</div>
-                        <div class="item-details">
-                            <span class="priority low">Low Priority</span>
-                            <span class="deadline">Complete: 2-3 months after arrival</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Plan Educational Transition Support</div>
-                        <div class="item-description">Consider counseling or tutoring support to help with curriculum differences and adjustment</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 1-2 months after arrival</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="notes-section">
-                    <div class="notes-title">Education System Notes:</div>
-                    <div class="notes-content">
-                        • BC follows a different curriculum structure than most US states<br>
-                        • School year typically runs from September to June<br>
-                        • French immersion programs are widely available<br>
-                        • Public education is free for residents, including newcomers
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Utilities & Services Tab -->
-            <div id="utilities" class="tab-content">
-                <div class="stats">
-                    <span id="utilities-completed">0 of 10 completed</span>
-                    <span id="utilities-progress">0% complete</span>
-                </div>
-                <div class="progress-bar">
-                    <div id="utilities-progress-bar" class="progress-fill" style="width: 0%"></div>
-                </div>
-                
-                <div class="section-header">Utilities, Internet & Essential Services</div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Research Internet Providers</div>
-                        <div class="item-description">Compare plans from Telus, Shaw, Rogers, and other providers in Vancouver area</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 1 month before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Set Up Electricity (BC Hydro)</div>
-                        <div class="item-description">Contact BC Hydro to establish electricity service at new address</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 2 weeks before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Arrange Gas Service (FortisBC)</div>
-                        <div class="item-description">Set up natural gas service if your new home uses gas heating or appliances</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 2 weeks before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Research Cell Phone Plans</div>
-                        <div class="item-description">Compare Rogers, Telus, Bell, and smaller carriers for family plans</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 1 month before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Set Up Water & Sewer</div>
-                        <div class="item-description">Contact Metro Vancouver or local municipality for water/sewer service setup</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 2 weeks before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Arrange Waste Management</div>
-                        <div class="item-description">Understand local garbage, recycling, and composting pickup schedules and requirements</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 1 week after arrival</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Set Up Cable/Streaming Services</div>
-                        <div class="item-description">Arrange television services and research Canadian streaming content availability</div>
-                        <div class="item-details">
-                            <span class="priority low">Low Priority</span>
-                            <span class="deadline">Complete: 1 month after arrival</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Research Home Security Options</div>
-                        <div class="item-description">Compare home security and monitoring services in Vancouver area</div>
-                        <div class="item-details">
-                            <span class="priority low">Low Priority</span>
-                            <span class="deadline">Complete: 2 months after arrival</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Terminate US Services</div>
-                        <div class="item-description">Cancel or transfer US utilities, internet, and other services with proper notice</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 2 weeks before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Set Up Mail Forwarding</div>
-                        <div class="item-description">Arrange US Postal Service mail forwarding and update address with all services</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 2 weeks before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="notes-section">
-                    <div class="notes-title">Utilities & Services Notes:</div>
-                    <div class="notes-content">
-                        • BC Hydro provides electricity throughout the province<br>
-                        • Canadian cell phone plans are generally more expensive than US plans<br>
-                        • Many US streaming services have different content libraries in Canada<br>
-                        • Some areas may have strata/condo fees that include utilities
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Housing & Moving Tab -->
-            <div id="housing" class="tab-content">
-                <div class="stats">
-                    <span id="housing-completed">0 of 12 completed</span>
-                    <span id="housing-progress">0% complete</span>
-                </div>
-                <div class="progress-bar">
-                    <div id="housing-progress-bar" class="progress-fill" style="width: 0%"></div>
-                </div>
-                
-                <div class="section-header">Housing Search & Accommodation</div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Research Vancouver Neighborhoods</div>
-                        <div class="item-description">Explore areas like Kitsilano, Mount Pleasant, Commercial Drive, and suburbs for family-friendly options</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 4-6 months before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Determine Housing Budget</div>
-                        <div class="item-description">Calculate affordable rent/mortgage payment considering Vancouver's high housing costs</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 4 months before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Secure Temporary Accommodation</div>
-                        <div class="item-description">Book extended-stay hotel, Airbnb, or corporate housing for first 1-2 months</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 2 months before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Research Rental Market</div>
-                        <div class="item-description">Understand BC tenancy laws, typical deposits, and rental application requirements</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 3 months before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Prepare Rental References</div>
-                        <div class="item-description">Gather employment letters, bank statements, and previous landlord references</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 2 months before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Visit Properties (Virtual or In-Person)</div>
-                        <div class="item-description">Schedule viewings or virtual tours of potential homes in preferred areas</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 1-2 months before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Apply for Long-term Housing</div>
-                        <div class="item-description">Submit applications with required documents and deposits for permanent housing</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 1 month before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Research Home Insurance</div>
-                        <div class="item-description">Compare tenant's or homeowner's insurance options in BC</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 2 weeks before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Plan Furniture & Household Items</div>
-                        <div class="item-description">Decide what to ship vs. buy new in Canada, research furniture stores</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 2 months before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Research Moving Companies</div>
-                        <div class="item-description">Get quotes from international moving companies experienced with US-Canada moves</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 3 months before move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Understand Condo/Strata Rules</div>
-                        <div class="item-description">If moving to a condo, review strata bylaws, fees, and building regulations</div>
-                        <div class="item-details">
-                            <span class="priority low">Low Priority</span>
-                            <span class="deadline">Complete: 1 month after move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Register with Tenancy Branch</div>
-                        <div class="item-description">Understand your rights and responsibilities under BC's Residential Tenancy Act</div>
-                        <div class="item-details">
-                            <span class="priority low">Low Priority</span>
-                            <span class="deadline">Complete: 1 month after move</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="notes-section">
-                    <div class="notes-title">Housing Market Notes:</div>
-                    <div class="notes-content">
-                        • Vancouver has one of the most expensive housing markets in North America<br>
-                        • Rental market is very competitive - be prepared to act quickly<br>
-                        • Many rentals require first month + security deposit upfront<br>
-                        • Consider proximity to SkyTrain lines for easy commuting
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Government Services Tab -->
-            <div id="government" class="tab-content">
-                <div class="stats">
-                    <span id="government-completed">0 of 10 completed</span>
-                    <span id="government-progress">0% complete</span>
-                </div>
-                <div class="progress-bar">
-                    <div id="government-progress-bar" class="progress-fill" style="width: 0%"></div>
-                </div>
-                
-                <div class="section-header">Government Registration & IDs</div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Apply for Social Insurance Number (SIN)</div>
-                        <div class="item-description">Visit Service Canada office to apply for SIN - required for employment and government services</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 1 week after arrival</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Apply for BC Services Card</div>
-                        <div class="item-description">Get BC identification card that also serves as health card</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 2 weeks after arrival</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Apply for BC Driver's License</div>
-                        <div class="item-description">Exchange US license for BC license within 90 days of establishing residency</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 3 months after arrival</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Register for BC Medical Services Plan (MSP)</div>
-                        <div class="item-description">Apply for provincial health insurance (3-month waiting period for new residents)</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 1 month after arrival</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Update Address with CRA</div>
-                        <div class="item-description">Notify Canada Revenue Agency of your new address for tax purposes</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 2 months after arrival</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Register to Vote</div>
-                        <div class="item-description">Register with Elections Canada and Elections BC for federal and provincial elections</div>
-                        <div class="item-details">
-                            <span class="priority low">Low Priority</span>
-                            <span class="deadline">Complete: 6 months after arrival</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Apply for Canada Child Benefit (CCB)</div>
-                        <div class="item-description">Register for monthly tax-free payments to help with child-raising costs</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 2 months after arrival</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Register Vehicle in BC</div>
-                        <div class="item-description">If bringing a vehicle, register it with ICBC and get BC license plates</div>
-                        <div class="item-details">
-                            <span class="priority medium">Medium Priority</span>
-                            <span class="deadline">Complete: 30 days after arrival</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Update Immigration Documents</div>
-                        <div class="item-description">Notify IRCC of address change and update any immigration-related documentation</div>
-                        <div class="item-details">
-                            <span class="priority high">High Priority</span>
-                            <span class="deadline">Complete: 1 month after arrival</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="checklist-item">
-                    <input type="checkbox" class="checkbox">
-                    <div class="item-content">
-                        <div class="item-title">Research Provincial Nominee Programs</div>
-                        <div class="item-description">If on work permit, explore BC PNP pathways to permanent residence</div>
-                        <div class="item-details">
-                            <span class="priority
+                        <div class="item-title">Investment Account
